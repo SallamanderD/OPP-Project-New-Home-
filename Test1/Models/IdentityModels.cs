@@ -1,0 +1,60 @@
+﻿using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Test1.Models
+{
+    // Чтобы добавить данные профиля для пользователя, можно добавить дополнительные свойства в класс ApplicationUser. Дополнительные сведения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=317594.
+    public class ApplicationUser : IdentityUser
+    {
+        public ApplicationUser() : base()
+        {
+        }
+
+        [Column]
+        public string Name { set; get; }
+
+        [Column]
+        public string Surname { set; get; }
+
+        [Column]
+        public int Money { set; get; }
+
+        [ForeignKey("Role")]
+        public int RoleId { set; get; }
+
+        public virtual Role Role { set; get; }
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Здесь добавьте утверждения пользователя
+            return userIdentity;
+        }
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+
+
+
+        public ApplicationDbContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
+        {
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+        public DbSet<Order> Orders { set; get; }
+        public DbSet<Teg> Tegs { set; get; }
+        public DbSet<Article> Articles { set; get; } 
+        public DbSet<ArticleWithTeg> AWT { set; get; }
+        public DbSet<Role> Roles { set; get; }   
+    }
+}

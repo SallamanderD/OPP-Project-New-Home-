@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@foreach (var x in ViewBag.db) {
+    <p>@x.Info</p>
+    <p>@x.ArticleId</p>
+
+    <br>
+}
