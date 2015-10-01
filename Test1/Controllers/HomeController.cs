@@ -13,7 +13,7 @@ namespace Test1.Controllers
         public ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            ViewBag.db = db.Articles.ToList();
+            ViewBag.db = SortByAlphabet(db.Articles.ToList());
             return View();
         }
 
@@ -37,6 +37,27 @@ namespace Test1.Controllers
 
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult SearchByInfo(string Info)
+        {
+            List<Article> ResultList = new List<Article>();
+            foreach (Article article in db.Articles)
+            {
+                if (article.Info.Contains(Info))
+                {
+                    ResultList.Add(article);
+                }
+            }
+            ViewBag.Result = ResultList;
+            return View();
+        }
+
+        public List<Article> SortByAlphabet(List<Article> UnsortedList)
+        {
+            List<Article> ResultList = UnsortedList;
+            ResultList.Sort(delegate (Article a, Article b) { return a.DateStart.CompareTo(b.DateStart); });
+            return ResultList;
         }
     }
 }

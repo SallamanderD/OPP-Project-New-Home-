@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-@foreach (var x in ViewBag.db) {
-    <p>@x.Info</p>
-    <p>@x.ArticleId</p>
-
-    <br>
+@foreach(var art in ViewBag.db)
+{
+    <div style="background-color: cornflowerblue; margin-top: 40px; width: 900px;">
+        <p>@art.Info</p>
+        <p style="margin-left: 600px;">@art.DateStart.ToString()</p>
+    </div>
 }
