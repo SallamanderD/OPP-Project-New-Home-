@@ -31,7 +31,7 @@ namespace Test1.Controllers
         }
         [HttpPost]
         public ActionResult AddArticle(string Info,string teg) {
-            db.Articles.Add(new Article { Info = Info, ArticleId = db.Articles.Count() + 1, DateStart = DateTime.Today });
+            db.Articles.Add(new Article { Info = Info, ArticleId = db.Articles.Count() + 1, DateStart = DateTime.Now });
             db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count(), TegId = db.Tegs.Where(x => x.Word == teg).First().TegId });
             db.Orders.Add(new Order { ArticleId = db.Articles.Count(), OrderId = db.Orders.Count() + 1, UserId = User.Identity.GetUserId() });
 
@@ -56,8 +56,14 @@ namespace Test1.Controllers
         public List<Article> SortByAlphabet(List<Article> UnsortedList)
         {
             List<Article> ResultList = UnsortedList;
-            ResultList.Sort(delegate (Article a, Article b) { return a.DateStart.CompareTo(b.DateStart); });
+            var OrderArticles = from i in ResultList
+                                orderby i.DateStart descending
+                                select i;
+            ResultList = OrderArticles.ToList();
             return ResultList;
         }
+
     }
+
+
 }
