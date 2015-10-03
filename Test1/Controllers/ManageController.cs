@@ -13,6 +13,7 @@ namespace Test1.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        public ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -54,6 +55,7 @@ namespace Test1.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            ViewBag.db= db.Orders.ToList().Where(x => x.EmailWorker == User.Identity.GetUserId());
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль изменен."
                 : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."

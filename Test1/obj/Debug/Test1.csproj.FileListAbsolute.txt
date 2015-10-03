@@ -166,6 +166,6 @@ D:\Prodject\Test13\Test1\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Prodject\Test13\Test1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Prodject\Test13\Test1\bin\ru\EntityFramework.resources.dll
 D:\Prodject\Test13\Test1\bin\ru\EntityFramework.SqlServer.resources.dll
-D:\Prodject\Test13\Test1\obj\Debug\Test1.csprojResolveAssemblyReference.cache
 D:\Prodject\Test13\Test1\obj\Debug\Test1.dll
 D:\Prodject\Test13\Test1\obj\Debug\Test1.pdb
+D:\Prodject\Test13\Test1\obj\Debug\Test1.csprojResolveAssemblyReference.cache

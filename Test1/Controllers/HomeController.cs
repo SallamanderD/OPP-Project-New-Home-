@@ -16,8 +16,8 @@ namespace Test1.Controllers
         {
 
             IEnumerable<Order> OrderArticles = from i in db.Orders
-                                        orderby i.DateStart descending
-                                        select i;
+                                               orderby i.DateStart descending
+                                               select i;
 
             ViewBag.db = OrderArticles.ToList();
             return View();
@@ -35,6 +35,7 @@ namespace Test1.Controllers
 
             return View();
         }
+
         [HttpPost]
         public ActionResult AddArticle(string Info, string teg)
         {
@@ -46,22 +47,29 @@ namespace Test1.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult SearchByInfo(string Info)
-        {
-            List<Article> ResultList = new List<Article>();
-            foreach (Article article in db.Articles)
+        [HttpPost]
+        public ActionResult TakeArticle(int OrderId) {
+            if (User.Identity.IsAuthenticated && User.Identity.GetUserId()!=db.Orders.Where(x=>x.OrderId==OrderId).First().UserId)
             {
-                if (article.Info.Contains(Info))
-                {
-                    ResultList.Add(article);
-                }
+                db.Orders.ToList().Where(x => x.OrderId == OrderId).First().EmailWorker = User.Identity.GetUserId();
+                db.SaveChanges();
             }
-            ViewBag.Result = ResultList;
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ThrowArticle(int Id) {
+            db.Orders.Where(x => x.OrderId == Id).First().EmailWorker = null;
+            db.SaveChanges();
+            return RedirectToAction("ShowUser", new  {id=User.Identity.GetUserId()    });
+        }
+
+        [HttpGet]
+        public ActionResult ShowUser( string Id) {
+
+            ViewBag.User = db.Users.Where(x => x.Id == Id).First();
             return View();
         }
 
-
     }
-
-
 }

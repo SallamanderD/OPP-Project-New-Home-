@@ -1,26 +1,30 @@
-﻿@using System.Collections.Generic;
-@using System;
-@using System.Collections.Generic;
-@using System.Linq;
-@using System.Web;
-@using System.Web.Mvc;
-@using Test1.Models;
-@using Microsoft.AspNet.Identity;
-@{
+﻿@{
 
     ViewBag.Title = "Home Page";
 }
-
+@* Показываем заказы, которые еще никто не взял *@
 @foreach (var art in ViewBag.db)
 {
-    <div style="background-color: cornflowerblue; margin-top: 40px; width: 900px;">
-        <p>@art.DateStart</p>
+    if (art.EmailWorker == null)
+    {
+        <div style="background-color: cornflowerblue; margin-top: 40px; width: 900px;">
 
-        @foreach (var awt in art.ArticleWithTeg)
-        {
-            <p>@awt.Teg.Word</p>
-        }
+            <p>Автор:<a href="/Home/ShowUser/@art.User.Id" name="Id">@art.User.Name</a></p>
+            <p>Заказ размещен в : @art.DateStart</p>
 
-        <p>@art.ArticleWithTeg[0].Article.Info</p>
-    </div>
+            @foreach (var awt in art.ArticleWithTeg)
+            {
+                <p>@awt.Teg.Word</p>
+            }
+
+            <p>@art.ArticleWithTeg[0].Article.Info</p>
+            @using (Html.BeginForm("TakeArticle", "Home"))
+            {
+                <input type="hidden" value="@art.OrderId" name="OrderId">
+                <input type="submit" value="Принять">
+            }
+        </div>
+
+
+    }
 }

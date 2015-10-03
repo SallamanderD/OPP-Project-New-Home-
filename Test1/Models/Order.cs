@@ -22,7 +22,7 @@ namespace Test1.Models
         public DateTime DateStart { set; get; }
 
         [Column]
-        public int EmailWorker { set; get; }
+        public string EmailWorker { set; get; }
 
         [ForeignKey("User")]
         public string UserId { set; get; }
