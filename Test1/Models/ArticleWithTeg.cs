@@ -13,6 +13,11 @@ namespace Test1.Models
         public int ArticleWithTegId { set; get; }
 
 
+        [ForeignKey("Order")]
+        public int OrderId { set; get; }
+
+        public virtual Order Order {set;get;}
+
         [ForeignKey("Article")]
         public int ArticleId { set; get; }
 
@@ -23,5 +28,6 @@ namespace Test1.Models
 
         public virtual Teg Teg { set; get; }
 
+ 
     }
 }

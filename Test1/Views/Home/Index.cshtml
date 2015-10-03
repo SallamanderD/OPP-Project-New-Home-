@@ -1,10 +1,26 @@
-﻿@{
+﻿@using System.Collections.Generic;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using Test1.Models;
+@using Microsoft.AspNet.Identity;
+@{
+
     ViewBag.Title = "Home Page";
 }
-@foreach(var art in ViewBag.db)
+
+@foreach (var art in ViewBag.db)
 {
     <div style="background-color: cornflowerblue; margin-top: 40px; width: 900px;">
-        <p>@art.Info</p>
-        <p style="margin-left: 600px;">@art.DateStart.ToString()</p>
+        <p>@art.DateStart</p>
+
+        @foreach (var awt in art.ArticleWithTeg)
+        {
+            <p>@awt.Teg.Word</p>
+        }
+
+        <p>@art.ArticleWithTeg[0].Article.Info</p>
     </div>
 }

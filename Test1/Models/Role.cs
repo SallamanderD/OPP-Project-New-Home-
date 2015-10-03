@@ -13,6 +13,6 @@ namespace Test1.Models
         public int RoleId { set; get; }
 
         [Column]
-        public string Type{ set; get; }
+        public string Type { set; get; }
     }
 }

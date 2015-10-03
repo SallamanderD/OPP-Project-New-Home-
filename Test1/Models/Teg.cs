@@ -13,7 +13,10 @@ namespace Test1.Models
     /// </summary>
     public class Teg
     {
-        public Teg() { }
+        public Teg()
+        {
+            ArticleWithTeg = new List<ArticleWithTeg>();
+        }
 
         [Key]
         public int TegId { set; get; }
@@ -21,6 +24,6 @@ namespace Test1.Models
         [Column]
         public string Word { set; get; }
 
-        public virtual IEnumerable<ArticleWithTeg> AWT { set; get; }
+        public virtual List<ArticleWithTeg> ArticleWithTeg { set; get; }
     }
 }

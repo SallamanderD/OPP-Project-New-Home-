@@ -11,9 +11,15 @@ namespace Test1.Controllers
     public class HomeController : Controller
     {
         public ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
-            ViewBag.db = SortByAlphabet(db.Articles.ToList());
+
+            IEnumerable<Order> OrderArticles = from i in db.Orders
+                                        orderby i.DateStart descending
+                                        select i;
+
+            ViewBag.db = OrderArticles.ToList();
             return View();
         }
 
@@ -30,10 +36,11 @@ namespace Test1.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddArticle(string Info,string teg) {
-            db.Articles.Add(new Article { Info = Info, ArticleId = db.Articles.Count() + 1, DateStart = DateTime.Now });
-            db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count(), TegId = db.Tegs.Where(x => x.Word == teg).First().TegId });
-            db.Orders.Add(new Order { ArticleId = db.Articles.Count(), OrderId = db.Orders.Count() + 1, UserId = User.Identity.GetUserId() });
+        public ActionResult AddArticle(string Info, string teg)
+        {
+            db.Articles.Add(new Article { Info = Info, ArticleId = db.Articles.Count() + 1 });
+            db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count(), TegId = db.Tegs.Where(x => x.Word == teg).First().TegId, OrderId = db.Orders.Count() + 1 });
+            db.Orders.Add(new Order { DateStart = DateTime.Now, OrderId = db.Orders.Count() + 1, UserId = User.Identity.GetUserId() });
 
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -53,15 +60,6 @@ namespace Test1.Controllers
             return View();
         }
 
-        public List<Article> SortByAlphabet(List<Article> UnsortedList)
-        {
-            List<Article> ResultList = UnsortedList;
-            var OrderArticles = from i in ResultList
-                                orderby i.DateStart descending
-                                select i;
-            ResultList = OrderArticles.ToList();
-            return ResultList;
-        }
 
     }
 
