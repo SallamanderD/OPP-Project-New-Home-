@@ -56,6 +56,7 @@ namespace Test1.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.db= db.Orders.ToList().Where(x => x.EmailWorker == User.Identity.GetUserId());
+            ViewBag.CreatedArticles = db.Orders.ToList().Where(x => x.Customer.UserName == User.Identity.Name);
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль изменен."
                 : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."

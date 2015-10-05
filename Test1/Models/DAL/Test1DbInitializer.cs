@@ -27,9 +27,9 @@ namespace Test1.Models.DAL
             db.Tegs.Add(new Teg { TegId = 5, Value = "Программирование" });
 
 
-            db.Articles.Add(new Article { ArticleId = 1, Info = "Несложные задачи по математике, нужно помочь решить. Всего пара штучек за пара часиков, ,все будет хорошо." });
-            db.Articles.Add(new Article { ArticleId = 2, Info = "Нужно сделать фронтенд для молодого проека Банк времени" });
-            db.Articles.Add(new Article { ArticleId = 3, Info = "НУжно делать хоть, что-то и придумівать работу себе самим" });
+            db.Articles.Add(new Article { ArticleId = 1, Name = "Решение математики.", Info = "Несложные задачи по математике, нужно помочь решить. Всего пара штучек за пара часиков, все будет хорошо." });
+            db.Articles.Add(new Article { ArticleId = 2, Name = "Front-End dev. need", Info = "Нужно сделать фронтенд для молодого проекта Банк Времени" });
+            db.Articles.Add(new Article { ArticleId = 3, Name = "Работаем!", Info = "Нужно делать хоть, что-то и придумывать работу себе самим" });
 
 
             db.Orders.Add(new Order { OrderId = 1, DateStart = DateTime.Today, CustomerId = db.Users.ToList().First().Id, Completed = false });

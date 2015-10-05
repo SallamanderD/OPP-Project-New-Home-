@@ -37,12 +37,12 @@ namespace Test1.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddArticle(string Info, string teg)
+        public ActionResult AddArticle(string Info, string teg, string Name)
         {
             lock (db)
             {
-                db.Articles.Add(new Article { Info = Info, ArticleId = db.Articles.Count() + 1 });
-                db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count(), TegId = db.Tegs.Where(x => x.Value == teg).First().TegId, OrderId = db.Orders.Count() + 1 });
+                db.Articles.Add(new Article { Name = Name, Info = Info, ArticleId = db.Articles.Count() + 1 });
+                db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count() + 1, TegId = db.Tegs.Where(x => x.Value == teg).First().TegId, OrderId = db.Orders.Count() + 1 });
                 db.Orders.Add(new Order { DateStart = DateTime.Now, OrderId = db.Orders.Count() + 1, CustomerId = User.Identity.GetUserId(), Completed = false });
 
                 db.SaveChanges();

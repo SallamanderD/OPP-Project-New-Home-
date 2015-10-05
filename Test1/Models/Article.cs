@@ -26,6 +26,11 @@ namespace Test1.Models
         [StringLength(1000, MinimumLength = 20, ErrorMessage = "Длина строки должна быть от 20 до 1000 символов.")]
         public string Info { set; get; }
 
+        [Column]
+        [Required]
+        [StringLength(30, MinimumLength = 4, ErrorMessage = "Длина строки должна быть от 4 до 30 символов.")]
+        public string Name { set; get; }
+
 
         public virtual List<ArticleWithTeg> ArticleWithTeg { set; get; }
     }

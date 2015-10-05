@@ -18,7 +18,7 @@ else
 {
     @Html.ActionLink("Создать", "SetPassword")
 }
-<h2>Ваши заказы</h2>
+<h2>Принятые заказы</h2>
 @foreach (var art in ViewBag.db)
 {
 
@@ -31,12 +31,29 @@ else
         {
             <p>@awt.Teg.Value</p>
         }
-
+        <p>@art.ArticleWithTeg[0].Article.Name</p>
         <p>@art.ArticleWithTeg[0].Article.Info</p>
         @using (Html.BeginForm("ThrowArticle", "Home")) {
             <input type="hidden" value="@art.OrderId" name="Id">
             <input type="submit" value="Отказаться">
         }
+    </div>
+}
+<h2>Созданные заказы</h2>
+@foreach (var art in ViewBag.CreatedArticles)
+{
+
+    <div style="background-color: cornflowerblue; margin-top: 40px; width: 900px;">
+
+        <p>Автор:<a href="/Home/ShowUser/@art.Customer.Id" name="Id">@art.Customer.Name</a></p>
+        <p>Заказ размещен в : @art.DateStart</p>
+
+        @foreach (var awt in art.ArticleWithTeg)
+        {
+            <p>@awt.Teg.Value</p>
+        }
+        <p>@art.ArticleWithTeg[0].Article.Name</p>
+        <p>@art.ArticleWithTeg[0].Article.Info</p>
     </div>
 }
 

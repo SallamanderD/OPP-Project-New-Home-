@@ -16,8 +16,8 @@
             {
                 <p>@awt.Teg.Value</p>
             }
-
-            <p >@art.ArticleWithTeg[0].Article.Info</p>
+            <p>@art.ArticleWithTeg[0].Article.Name</p>
+            <p>@art.ArticleWithTeg[0].Article.Info</p>
             @using (Html.BeginForm("TakeArticle", "Home"))
             {
                 <input type="hidden" value="@art.OrderId" name="OrderId">
