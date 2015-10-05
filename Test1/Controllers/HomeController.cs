@@ -39,33 +39,45 @@ namespace Test1.Controllers
         [HttpPost]
         public ActionResult AddArticle(string Info, string teg)
         {
-            db.Articles.Add(new Article { Info = Info, ArticleId = db.Articles.Count() + 1 });
-            db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count(), TegId = db.Tegs.Where(x => x.Word == teg).First().TegId, OrderId = db.Orders.Count() + 1 });
-            db.Orders.Add(new Order { DateStart = DateTime.Now, OrderId = db.Orders.Count() + 1, UserId = User.Identity.GetUserId() });
-
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public ActionResult TakeArticle(int OrderId) {
-            if (User.Identity.IsAuthenticated && User.Identity.GetUserId()!=db.Orders.Where(x=>x.OrderId==OrderId).First().UserId)
+            lock (db)
             {
-                db.Orders.ToList().Where(x => x.OrderId == OrderId).First().EmailWorker = User.Identity.GetUserId();
+                db.Articles.Add(new Article { Info = Info, ArticleId = db.Articles.Count() + 1 });
+                db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count(), TegId = db.Tegs.Where(x => x.Value == teg).First().TegId, OrderId = db.Orders.Count() + 1 });
+                db.Orders.Add(new Order { DateStart = DateTime.Now, OrderId = db.Orders.Count() + 1, CustomerId = User.Identity.GetUserId(), Completed = false });
+
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult ThrowArticle(int Id) {
-            db.Orders.Where(x => x.OrderId == Id).First().EmailWorker = null;
-            db.SaveChanges();
-            return RedirectToAction("ShowUser", new  {id=User.Identity.GetUserId()    });
+        public ActionResult TakeArticle(int OrderId)
+        {
+            if (User.Identity.IsAuthenticated && User.Identity.GetUserId() != db.Orders.Where(x => x.OrderId == OrderId).First().CustomerId)
+            {
+                lock (db)
+                {
+                    db.Orders.ToList().Where(x => x.OrderId == OrderId).First().EmailWorker = User.Identity.GetUserId();
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ThrowArticle(int Id)
+        {
+            lock (db)
+            {
+                db.Orders.Where(x => x.OrderId == Id).First().EmailWorker = null;
+                db.SaveChanges();
+            }
+            return RedirectToAction("ShowUser", new { id = User.Identity.GetUserId() });
         }
 
         [HttpGet]
-        public ActionResult ShowUser( string Id) {
+        public ActionResult ShowUser(string Id)
+        {
 
             ViewBag.User = db.Users.Where(x => x.Id == Id).First();
             return View();

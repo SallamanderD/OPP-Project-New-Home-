@@ -24,12 +24,18 @@ namespace Test1.Models
         [Column]
         public string EmailWorker { set; get; }
 
-        [ForeignKey("User")]
-        public string UserId { set; get; }
+        [ForeignKey("Customer")]
+        public string CustomerId { set; get; }
 
-        public virtual ApplicationUser User { set; get; }
-        
+        public virtual ApplicationUser Customer { set; get; }
+
+        [Column]
+        [Required]
+        public bool Completed { set; get; }
+
         public virtual List<ArticleWithTeg> ArticleWithTeg { set; get; }
+
+
 
 
     }

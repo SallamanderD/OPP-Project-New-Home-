@@ -22,7 +22,7 @@ namespace Test1.Models
         public int TegId { set; get; }
 
         [Column]
-        public string Word { set; get; }
+        public string Value { set; get; }
 
         public virtual List<ArticleWithTeg> ArticleWithTeg { set; get; }
     }

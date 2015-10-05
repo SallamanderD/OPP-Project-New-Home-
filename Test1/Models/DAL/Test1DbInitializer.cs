@@ -20,21 +20,21 @@ namespace Test1.Models.DAL
                 db.AWT.Add(new ArticleWithTeg { ArticleId = i + 1, ArticleWithTegId = i, TegId = i + 1, OrderId = i + 1 });
 
             }
-           db.Tegs.Add(new Teg { TegId = 1, Word = "Математика" });
-            db.Tegs.Add(new Teg { TegId = 2, Word = "Уборка" });
-            db.Tegs.Add(new Teg { TegId = 3, Word = "Прогулка" });
-            db.Tegs.Add(new Teg { TegId = 4, Word = "Английский" });
-            db.Tegs.Add(new Teg { TegId = 5, Word = "Программирование" });
+           db.Tegs.Add(new Teg { TegId = 1, Value = "Математика" });
+            db.Tegs.Add(new Teg { TegId = 2, Value = "Уборка" });
+            db.Tegs.Add(new Teg { TegId = 3, Value = "Прогулка" });
+            db.Tegs.Add(new Teg { TegId = 4, Value = "Английский" });
+            db.Tegs.Add(new Teg { TegId = 5, Value = "Программирование" });
 
 
-            db.Articles.Add(new Article { ArticleId = 1, Info = "Не сложные задачи по математики, нужно помочь решить. Всего пара штучек за пара часиков, ,все будет хорошо." });
+            db.Articles.Add(new Article { ArticleId = 1, Info = "Несложные задачи по математике, нужно помочь решить. Всего пара штучек за пара часиков, ,все будет хорошо." });
             db.Articles.Add(new Article { ArticleId = 2, Info = "Нужно сделать фронтенд для молодого проека Банк времени" });
             db.Articles.Add(new Article { ArticleId = 3, Info = "НУжно делать хоть, что-то и придумівать работу себе самим" });
 
-           
-            db.Orders.Add(new Order { OrderId = 1, DateStart = DateTime.Today, UserId = db.Users.ToList().First().Id });
-            db.Orders.Add(new Order { OrderId = 2, DateStart = DateTime.Today,UserId=db.Users.ToList().First().Id });
-            db.Orders.Add(new Order { OrderId = 3, DateStart = DateTime.Today, UserId = db.Users.ToList().First().Id });
+
+            db.Orders.Add(new Order { OrderId = 1, DateStart = DateTime.Today, CustomerId = db.Users.ToList().First().Id, Completed = false });
+            db.Orders.Add(new Order { OrderId = 2, DateStart = DateTime.Today,CustomerId=db.Users.ToList().First().Id, Completed = false });
+            db.Orders.Add(new Order { OrderId = 3, DateStart = DateTime.Today, CustomerId = db.Users.ToList().First().Id, Completed = false });
         
 
             db.SaveChanges();
