@@ -3,6 +3,7 @@
     ViewBag.Title = "Home Page";
 }
 @* Показываем заказы, которые еще никто не взял *@
+
 @foreach (var art in ViewBag.db)
 {
     if (art.EmailWorker == null)

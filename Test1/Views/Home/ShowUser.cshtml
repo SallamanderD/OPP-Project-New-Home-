@@ -1,10 +1,32 @@
-﻿
+﻿@model Test1.Models.IndexViewModel
 @{
-    ViewBag.Title = "ShowUser";
+    ViewBag.Title = "Управление";
 }
 
-<h2>@(ViewBag.User.Name)</h2>
 
-<h2>@(ViewBag.User.Surname)</h2>
 
-<h2>@(ViewBag.User.Money)</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<p>@ViewBag.User.Name</p>
+<p>@ViewBag.User.Surname</p>
+
+<h2>Созданные заказы</h2>
+@foreach (var art in ViewBag.Article)
+{
+
+    <div style="background-color: cornflowerblue; margin-top: 40px; width: 900px;">
+
+
+        <p>Заказ размещен в : @art.DateStart</p>
+
+        @foreach (var awt in art.ArticleWithTeg)
+        {
+            <p>@awt.Teg.Value</p>
+        }
+        <p>@art.ArticleWithTeg[0].Article.Name</p>
+        <p>@art.ArticleWithTeg[0].Article.Info</p>
+        @if (art.EmailWorker != "" && art.EmailWorker != null) {
+                <p>Выполнил: @art.EmailWocer</p>
+        }
+    </div>
+}
+

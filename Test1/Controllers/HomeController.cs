@@ -10,7 +10,7 @@ namespace Test1.Controllers
 {
     public class HomeController : Controller
     {
-        public ApplicationDbContext db = new ApplicationDbContext();
+        public ApplicationDbContext db =  new ApplicationDbContext();
 
         public ActionResult Index()
         {
@@ -43,7 +43,7 @@ namespace Test1.Controllers
             {
                 db.Articles.Add(new Article { Name = Name, Info = Info, ArticleId = db.Articles.Count() + 1 });
                 db.AWT.Add(new ArticleWithTeg { ArticleId = db.Articles.Count() + 1, TegId = db.Tegs.Where(x => x.Value == teg).First().TegId, OrderId = db.Orders.Count() + 1 });
-                db.Orders.Add(new Order { DateStart = DateTime.Now, OrderId = db.Orders.Count() + 1, CustomerId = User.Identity.GetUserId(), Completed = false });
+                db.Orders.Add(new Order {Done=false, DateStart = DateTime.Now, OrderId = db.Orders.Count() + 1, CustomerId = User.Identity.GetUserId(), Completed = false });
 
                 db.SaveChanges();
             }
@@ -80,6 +80,7 @@ namespace Test1.Controllers
         {
 
             ViewBag.User = db.Users.Where(x => x.Id == Id).First();
+            ViewBag.Article = db.Orders.Where(x => x.CustomerId == Id).ToList();
             return View();
         }
 

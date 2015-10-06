@@ -67,6 +67,7 @@ namespace Test1.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            ViewBag.Money = db.Users.Where(x => x.Id == userId).First().Money;
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),

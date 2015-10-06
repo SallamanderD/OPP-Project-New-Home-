@@ -20,7 +20,8 @@ namespace Test1.Models
         [Column]
         [Required]
         public DateTime DateStart { set; get; }
-
+        [Column]
+        public bool Done { set; get; }
         [Column]
         public string EmailWorker { set; get; }
 

@@ -18,7 +18,7 @@ namespace Test1
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer(new Test1DbInitializer());
+           Database.SetInitializer(new Test1DbInitializer());
         }
     }
 }

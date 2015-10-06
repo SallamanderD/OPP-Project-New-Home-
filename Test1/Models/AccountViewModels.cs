@@ -75,7 +75,8 @@ namespace Test1.Models
 
         [Required]
         [Display(Name = "Фамилиля")]
-        public string Surname{ get; set; }
+        public string Surname { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]

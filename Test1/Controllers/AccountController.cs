@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Test1.Models;
+using System.Web.Security;
 
 namespace Test1.Controllers
 {
@@ -17,6 +18,8 @@ namespace Test1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+    
 
         public AccountController()
         {
@@ -151,13 +154,16 @@ namespace Test1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { Name=model.Name,Surname=model.Surname,Money=0, UserName = model.Name, Email = model.Email,RoleId=2 };
+                var user = new ApplicationUser { Name=model.Name,Surname=model.Surname,Money=0, UserName = model.Name, Email = model.Email,RoleId=2};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     ApplicationDbContext db = new ApplicationDbContext();
-                    db.Users.Add(user);
-                 
+                    lock (db)
+                    {
+                       
+                        db.Users.Add(user);
+                    }
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // Дополнительные сведения о том, как включить подтверждение учетной записи и сброс пароля, см. по адресу: http://go.microsoft.com/fwlink/?LinkID=320771
@@ -388,6 +394,7 @@ namespace Test1.Controllers
             return View(model);
         }
 
+ 
         //
         // POST: /Account/LogOff
         [HttpPost]
